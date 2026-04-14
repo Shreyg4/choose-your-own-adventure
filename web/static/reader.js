@@ -63,7 +63,7 @@
         const target = parseInt(m[1], 10);
         if (outgoingSet.has(target)) {
           choiceLinks.push(target);
-          resultLines.push(`<a class="choice-link" href="/#${target}" data-target="${target}">${line.trim()}</a>`);
+          resultLines.push(`<a class="choice-link" href="#${target}" data-target="${target}">${line.trim()}</a>`);
           replaced = true;
           break;
         }
@@ -114,7 +114,7 @@
     extraChoices.forEach(target => {
       const a = document.createElement('a');
       a.className = 'choice-link';
-      a.href = `/#${target}`;
+      a.href = `#${target}`;
       a.textContent = `Go to page ${target}`;
       choicesDiv.appendChild(a);
     });
@@ -127,7 +127,7 @@
       if (outgoing.length === 0 && choiceLinks.length === 0) {
         const nextPage = page + 1;
         const fbLink = sequentialFallback.querySelector('a');
-        fbLink.href = `/#${nextPage}`;
+        fbLink.href = `#${nextPage}`;
         fbLink.textContent = `Continue to page ${nextPage}`;
         sequentialFallback.classList.remove('hidden');
       } else {
