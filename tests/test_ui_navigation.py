@@ -50,6 +50,17 @@ def _set_viewport(page: Page):
 
 
 # ---------------------------------------------------------------------------
+# Root redirect
+# ---------------------------------------------------------------------------
+
+def test_root_redirects_to_reader(page: Page, live_server_url):
+    _set_viewport(page)
+    page.goto(f"{live_server_url}/")
+    page.wait_for_timeout(500)
+    assert "reader.html" in page.url
+
+
+# ---------------------------------------------------------------------------
 # Navigation bar
 # ---------------------------------------------------------------------------
 
