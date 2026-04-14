@@ -101,3 +101,67 @@ This should be the right “read first” file for continuing the project.Create
 
 Created Codebase.md as a persistent project-state note capturing the corrected OCR workflow, canonical outputs, current scripts, deleted obsolete artifacts, and the exact commands and rules needed to resume this project without repeating prior investigation.
 ```
+
+### 11:52am
+
+Read the Fork-Instructions.md and Codebase.md. Then write a new Brainstorm.md for the following task. Do not write code yet.
+
+Read the folder cot-pages-ocr-v2.
+
+We will be creating a web interface for this CYOA adventure story. What are some ideas on how to make this work?
+
+My idea is to parse through the pages, look at filenames to determine page number, and make text like "Go to page xx" into links.
+
+There should also be a graph view with connections that can be manipulated, and support importing new pages with automatic sync.
+
+### 12:05pm
+
+Update Brainstorm.md to account for these variations:
+
+Sometimes it says "tum to page 4", sometimes "turn to page 4", sometimes "go to page 4", and sometimes "end story".
+
+Confirm whether all are properly accounted for.
+
+### 12:12pm
+
+Append to the bottom of Brainstorm.md.
+
+We like the interactive graph view for idea 2.
+
+It should handle the many variations.
+
+This should be an HTML-based website.
+
+Define an implementation plan. Do not implement.
+
+### 12:23pm
+
+Adjust the plan: there is cot-story-graph.mmd, and it should be prioritized for links.
+
+Use parsing as a last resort.
+
+### 12:27pm
+
+Split the direct implementation plan and phases into a new file: ToDo.md.
+
+Brainstorm.md is only for brainstorm.
+
+### 12:29pm
+
+Please start with phase 1.
+
+### 12:30pm
+
+In ToDo.md, write down documentation for tests to add and pass for each phase, including the already implemented phase 1.
+
+Do not implement yet.
+
+### 12:52pm
+
+Proceed to phase 2.
+
+Please pass all tests at this point.
+
+### 12:55pm
+
+Please implement phase 3.

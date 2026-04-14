@@ -2,6 +2,37 @@
 
 A web-based authoring tool and reader for branching CYOA stories. Built for *The Cave of Time* and extensible to any similarly structured story.
 
+## Assignment Submission Info
+
+- **Due:** Midnight
+- **GitHub Repository URL:** https://github.com/pisan382/choose-your-own-adventure
+- **Deployed Website URL:** TODO - add your public deployment URL before final submission
+- **Team Members (all must contribute):** Timothy So, Vincent Huang, Shreyas Sundar Ganesh
+
+## Class Workflow Checklist
+
+Use this checklist to match the required class process:
+
+- Form your team and add yourself to the CYOA groups in Canvas (`People` section).
+- Use the repository `https://github.com/pisan382/choose-your-own-adventure` and add all team members as contributors.
+- Read `Fork-Instructions.md` to understand project goals and constraints.
+- Read `AI-Instructions.md` to review the initial AI direction and constraints.
+- Read `Codebase.md` before implementation and when prompting AI, so AI has current architecture context.
+- Keep brainstorming in `Brainstorm.md`.
+- Keep implementation tasks in `ToDo.md`.
+- Coordinate team decisions early (feature scope, UI direction, ownership, review flow).
+- Ask exploratory AI questions first and use planning mode before implementation.
+- Keep `Codebase.md` updated as the architecture changes.
+- Extend and deploy the project on a public website.
+- Verify all team members committed to `main` via the commits page:
+  `https://github.com/pisan382/choose-your-own-adventure/commits/main/`
+
+## AI Collaboration Method
+
+- Start by writing prompt drafts in project files, then copy/paste them into AI.
+- This keeps a clear creation trace and supports reflection on early ideas.
+- Full interaction history is encouraged but not required; following the method consistently is the priority.
+
 ## What You Get
 
 - **Reader Mode** — Read the story page by page with clickable choices.
