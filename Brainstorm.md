@@ -45,6 +45,50 @@ When the server scans `cot-pages-ocr-v2/`, it derives the page number from the f
 
 ---
 
+## Idea 1b: Handling Variations in Choice Phrasing and Endings
+
+**Concept:** Real-world text (and OCR output) contains many variations for choices and endings.
+The parser must be resilient to phrasing like `tum to page 4`, `turn to page 4`, `go to page 4`,
+`return to page 4`, or even `follow her to page 12`. Likewise, a story can conclude with
+`The End`, `End Story`, `Story Ends`, or simply `End`.
+
+**Current State:**
+- `build_story_graph.py` already uses a fairly robust regex (`TURN_TO_RE`) that matches
+  `turn`, `tum`, `go`, `follow`, `take`, and `return`, followed by `to`/`ta`/`io` and
+  `page`/`poge`/`p.`. It also normalizes OCR-corrupted digits (`O`→`0`, `I`→`1`, `S`→`5`, etc.).
+- For terminal detection, the script only checks for `\bthe\s+end\b`. All current 111 pages
+  that are endings do contain `The End`, but future author uploads may use different phrasing.
+
+**How the web UI should account for this:**
+- **Configurable link regex:** Expose the choice-detection pattern in a settings panel so
+  authors can add new verbs or prepositions without touching code.
+- **Broader terminal detection:** Expand the backend terminal check to a list of patterns:
+  - `The End`
+  - `End Story`
+  - `Story Ends`
+  - `End.` (at the end of the text)
+  - `THE END`
+- **Manual terminal toggle:** In the authoring tool, let authors click a **"Mark as Ending"**
+  checkbox on any page. This overrides auto-detection and ensures the graph colors the node
+  red even if the text uses an unconventional closing phrase.
+- **Auto-linkify fallback in Reader Mode:** If the parser finds no explicit choices and the
+  page is *not* marked as an ending, fall back to the sequential continuation (`page n` →
+  `page n+1`). If the next page does not exist, show a **"Dead end — page missing"** message
+  so the reader knows the story is unfinished.
+- **Author feedback on save:** When an author saves a page, flash a notice:
+  - *"Detected 2 choices: Page 4, Page 5"*
+  - *"Detected ending marker"*
+  - *"No choices or ending found — will auto-continue to Page 7"*
+  This immediate feedback catches typos like `tun to page 4` (which the existing regex already
+  catches due to the `tum` OCR heuristic) or missing page numbers.
+
+**Benefits:**
+- Prevents broken story paths caused by unconventional phrasing.
+- Gives authors full control over whether a page is treated as terminal.
+- Surfaces parser results immediately so mistakes are caught before export.
+
+---
+
 ## Idea 2: Interactive Graph View (Authoring Tool)
 
 **Concept:** A visual graph editor where nodes = pages and edges = choices/continuations.
@@ -182,7 +226,9 @@ are not part of the narrative graph.
    great for editing) vs. D3 (full control, more work).
 3. **State storage:** Do we store graph edits back to `.mmd` only, or maintain a JSON/DB
    representation for richer metadata (page titles, tags, coordinates)?
-4. **OCR cleanup workflow:** Should the web UI include a spell-check or "suggest fix" feature
+4. **Terminal marker expansion:** Should the default terminal regex include `End Story`,
+   `Story Ends`, and other common variants out of the box?
+5. **OCR cleanup workflow:** Should the web UI include a spell-check or "suggest fix" feature
    for obvious OCR errors (e.g. `tum` → `turn`) before saving?
 
 ---
@@ -191,9 +237,11 @@ are not part of the narrative graph.
 
 1. Build a small **FastAPI/Flask backend** that serves the existing `cot-pages-ocr-v2/` files
    and exposes a `/api/graph` JSON endpoint derived from `build_story_graph.py` logic.
-2. Build a **Reader Mode SPA** that fetches page text and auto-linkifies "turn to page X" choices.
+2. Build a **Reader Mode SPA** that fetches page text and auto-linkifies choice text
+   (`turn to page X`, `go to page X`, `tum to page X`, etc.), with clear handling of endings.
 3. Build an **Authoring Tool** with a **Cytoscape.js** or **React Flow** graph view that consumes
-   the same JSON graph.
-4. Implement **auto-sync:** uploading or editing a page triggers a re-parse, updates the graph
-   JSON, and highlights any broken links.
+   the same JSON graph, including a manual **"Mark as Ending"** toggle.
+4. Implement **auto-sync:** uploading or editing a page triggers a re-parse using the robust,
+   configurable regex; updates the graph JSON; and highlights any broken links or missing
+   terminal markers.
 5. Add a **static export** feature that writes out plain HTML and re-runs the canonical Python scripts.

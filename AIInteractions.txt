@@ -1,0 +1,64 @@
+Read the Fork-Instructions.md and Codebase.md. Then write a new Brainstorm.md for the following task. Do not write code yet. Read the folder cot-pages-ocr-v2. We will be creating a web interface for this CYOA adventure story. What are some ideas on how to make this work? My idea is to be able to parse through the pages, look at the filenames to determine the page number and have the part of the text that says "Go to page xx" as a link there. And there should also be a graph view with connections to be able to be manipulated so you can import new pages and have it sync automatically. Anyway please brainstorm.
+
+K
+Kimi
+Thinking
+
+ReadFile
+Fork-Instructions.md
+
+ReadFile
+Codebase.md
+
+Shell
+ls -la output/cot-pages-ocr-v2/ | head -30
+Thinking
+
+Shell
+ls output/cot-pages-ocr-v2/ | wc -l
+
+ReadFile
+02-CoT.txt
+
+ReadFile
+03-CoT.txt
+
+ReadFile
+06-CoT.txt
+
+ReadFile
+cot-story-graph.mmd
+Thinking
+
+ReadFile
+05-CoT.txt
+
+ReadFile
+117-CoT.txt
+
+ReadFile
+119-CoT.txt
+
+ReadFile
+cot-story-graph.svg
+Thinking
+
+ReadFile
+build_story_graph.py
+Thinking
+
+WriteFile
+Brainstorm.md
+Thinking
+Done! I've read the project docs, explored the cot-pages-ocr-v2 folder (111 text pages), and written a comprehensive Brainstorm.md at the project root.
+
+The brainstorm covers:
+
+Page Parsing & Link Detection — leveraging the existing build_story_graph.py regex to auto-linkify "turn to page X" choices in a web reader.
+Interactive Graph View — using a client-side graph library (Cytoscape.js or React Flow) to visualize and edit the story graph, with color-coded nodes (main trunk, endings, regular branches).
+Automatic Sync on Import — drag-and-drop new .txt files, diff the changes, and re-sync the graph live.
+Reader Mode SPA — a clean, book-like interface with clickable choices, history breadcrumbs, and keyboard navigation.
+Split-Pane Authoring UI — text editor on the left, live graph on the right.
+Handling Non-Story Pages — filtering out metadata pages like "About the Author" (page 117) and book lists (page 119).
+Export & Publishing Pipeline — static HTML generation plus re-running the canonical Python scripts.
+It also ends with a recommended implementation path and open questions for the next phase. Take a look at Brainstorm.md and let me know which ideas you'd like to pursue!
